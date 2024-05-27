@@ -600,3 +600,142 @@ class GirlGroup extends Idol {
   }
 }
 ```
+
+## method override
+
+method - class 내부에 있는 함수
+override - 덮어쓰다 (우선시하다)
+
+```dart
+void main() {
+  TimesTwo tt = TimesTwo(2);
+
+  print(tt.calculate());
+
+  TimesFour tf = TimesFour(2);
+
+  print(tf.calculate());
+}
+
+class TimesTwo {
+  final int number;
+
+  TimesTwo(
+    this.number,
+  );
+
+  int calculate() {
+    return this.number * 2;
+  }
+}
+
+class TimesFour extends TimesTwo {
+  TimesFour(int number) : super(number);
+
+  @override
+  int calculate() {
+    return super.calculate() * 2;
+  }
+}
+```
+
+### static
+
+```dart
+void main() {
+  Employee seulgi = Employee("seulgi");
+  Employee kjw = Employee("정운");
+
+  Employee.building = "test";
+
+  seulgi.printNameAndBuilding();
+  kjw.printNameAndBuilding();
+
+  Employee.printBuilding();
+}
+
+class Employee {
+  // static은 instance에 귀속되지 않고 class에 귀속된다.
+
+  // 알바생이 일하고 있는 건물
+  static String? building;
+  // 알바생 이름
+  final String name;
+
+  Employee(this.name);
+
+  void printNameAndBuilding() {
+    print("제 이름은 ${this.name} 입니다. ${building} 건물에서 근무하고 있습니다.");
+  }
+
+  static void printBuilding() {
+    print("저는 ${building} 건물에서 근무중입니다.");
+  }
+}
+```
+
+### interface
+
+```dart
+ void main() {
+  BoyGroup bts = BoyGroup("bts");
+  GirlGroup redVelvet = GirlGroup("redVelvet");
+
+  bts.sayName();
+  redVelvet.sayName();
+}
+
+// interface
+abstract class IdolInterface {
+  String name;
+
+  IdolInterface(this.name);
+
+  void sayName();
+}
+
+class BoyGroup implements IdolInterface {
+  String name;
+
+  BoyGroup(this.name);
+
+  void sayName() {
+    print("제 이름은 ${this.name} 입니다.");
+  }
+}
+
+class GirlGroup implements IdolInterface {
+  String name;
+
+  GirlGroup(this.name);
+
+  void sayName() {
+    print("제 이름은 ${this.name} 입니다.");
+  }
+}
+```
+
+### generic
+
+```dart
+void main() {
+  Lecture<String, String> lecture1 = Lecture(123, "test");
+
+  lecture1.printIdType();
+
+  Lecture<int, int> lecture2 = Lecture(123, 123);
+  lecture2.printIdType();
+}
+
+// generic - 타입을 외부에서 받을때 사용
+class Lecture<T, X> {
+  final T id;
+  final X name;
+
+  Lecture(this.id, this.name);
+
+  void printIdType() {
+    print(id.runtimeType);
+  }
+}
+```
