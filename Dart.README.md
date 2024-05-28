@@ -739,3 +739,241 @@ class Lecture<T, X> {
   }
 }
 ```
+
+## Functional Programming
+
+### 형변환
+
+```dart
+void main() {
+  List<String> kjw = ["k", "j", "k"];
+
+  print(kjw);
+  print(kjw.asMap());
+  print(kjw.toSet());
+
+  Map kjwMap = kjw.asMap();
+
+  print(kjwMap.keys.toList());
+  print(kjwMap.values.toList());
+
+  Set kjwSet = Set.from(kjw);
+
+  print(kjwSet.toList());
+}
+```
+
+### list mapping
+
+```dart
+void main() {
+  List<String> kjw = ["k", "j", "k"];
+
+  final kjw2 = kjw.map((x) {
+    return "김 $x";
+  });
+
+  print(kjw2.toList());
+
+  final newKjw = kjw.map((x) => "김 $x");
+
+  print(newKjw.toList());
+
+  print(kjw == kjw);
+  print(newKjw == kjw);
+  print(kjw2 == newKjw);
+
+  // [1.jpg, 3.jpg, 5.jpg, 7.jpg, 9.jpg]
+  String number = "13579";
+
+  final parsed = number.split("").map((x) => "$x.jpg").toList();
+  print(parsed);
+}
+```
+
+### Map mapping
+
+```dart
+void main() {
+  Map<String, String> harryPotter = {
+    "Harry Potter": "해리포터",
+    "Ron Weasley": "론 위즐리"
+  };
+
+  final result = harryPotter.map((key, value) =>
+      MapEntry("Harry Potter Character $key", "해리포터 캐릭터 $value"));
+
+  print(harryPotter);
+  print(result);
+
+  final keys = harryPotter.keys.map((x) => "HPC $x").toList();
+  final values = harryPotter.values.map((x) => "해리포터 $x").toList();
+
+  print(keys);
+  print(values);
+}
+```
+
+### Set mapping
+
+```dart
+void main() {
+  Set kjw = {"k", "j", "w"};
+
+  final newSet = kjw.map((x) => "김 $x").toSet();
+
+  print(newSet);
+}
+```
+
+### List where
+
+```dart
+void main() {
+  List<Map<String, String>> people = [
+    {
+      "name": "k",
+      "group": "k1",
+    },
+    {
+      "name": "j",
+      "group": "j2",
+    },
+    {
+      "name": "u",
+      "group": "u3",
+    }
+  ];
+
+  print(people);
+
+  final result = people.where((x) => x["group"] == "k1");
+
+  print(result);
+}
+```
+
+### List reduce
+
+```dart
+void main() {
+  List<int> numbers = [1, 3, 5, 7, 9];
+
+  numbers.reduce((prev, next) {
+    print("------------");
+    print("previous $prev");
+    print("next $next");
+    print("total : ${prev + next}");
+
+    return prev + next;
+  });
+
+  List<String> words = ["안", "녕", "하", "세", "요"];
+
+  final sentence = words.reduce((prev, next) => prev + next);
+
+  print(sentence);
+
+  // 리턴되는 값이 선언된 값과 똑같아야 한다.
+  // words.reduce((prev, next) => prev.length + next.length);
+}
+```
+
+## 비동기 프로그래밍
+
+### future async await
+
+```dart
+void main() async {
+  // Future - 미래
+  // 미래에 받아올 값
+  Future<String> name = Future.value("kjw");
+  Future<int> number = Future.value(1);
+  Future<bool> isTrue = Future.value(true);
+
+  print("함수 시작");
+
+  // 2개의 파라미터
+  // delayed - 지연되다.
+  // 1번 파라미터 - 지연할 기간 (얼마나 지연할건지) Duration
+  // 2번 파라미터 - 지연 시간이 지난 후 실행할 함수.
+  Future.delayed(Duration(seconds: 2), () {
+    print("Delay 끝");
+  });
+
+  final result1 = await addNumbers(1, 1);
+  final result2 = await addNumbers(2, 2);
+
+  print("result1: $result1");
+  print("result2: $result2");
+  print("result1 + result2: ${result1 + result2}");
+}
+
+Future<int> addNumbers(int number1, int number2) async {
+  print("계산 시작: $number1 + $number2");
+
+  // 서버 시뮬레이션
+  await Future.delayed(Duration(seconds: 2), () {
+    print("계산 완료: $number1 + $number2 = ${number1 + number2}");
+  });
+
+  print("함수 완료: $number1 + $number2");
+
+  return number1 + number2;
+}
+```
+
+### Stream
+
+```dart
+import "dart:async";
+
+void main() {
+  final controller = StreamController();
+  final stream = controller.stream.asBroadcastStream();
+
+  final streamListener1 = stream.where((val) => val % 2 == 0).listen((val) {
+    print("Listener 1: $val");
+  });
+  final streamListener2 = stream.where((val) => val % 2 == 1).listen((val) {
+    print("Listener 2: $val");
+  });
+
+  controller.sink.add(1);
+  controller.sink.add(2);
+  controller.sink.add(3);
+  controller.sink.add(4);
+  controller.sink.add(5);
+}
+```
+
+```dart
+import "dart:async";
+
+void main() {
+  calculate(2).listen((val) {
+    print("calculate(1): $val");
+  });
+
+  calculate(4).listen((val) {
+    print("calculate(1): $val");
+  });
+
+  playAllStream().listen((val) {
+    print(val);
+  });
+}
+
+Stream<int> playAllStream() async* {
+  yield* calculate(1);
+  yield* calculate(1000);
+}
+
+Stream<int> calculate(int number) async* {
+  for (int i = 0; i < 5; i++) {
+    yield i * number;
+
+    await Future.delayed(Duration(seconds: 1));
+  }
+}
+```
