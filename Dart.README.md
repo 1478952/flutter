@@ -977,3 +977,267 @@ Stream<int> calculate(int number) async* {
   }
 }
 ```
+
+## 새문법
+
+### Record
+
+```dart
+void main() {
+  final result = nameAndAge({"name": "kjw", "age": 30});
+
+  print(result.$1);
+  print(result.$2);
+
+  final result2 = getKjwRecord();
+
+  for (final item in result2) {
+    print(item.$1);
+    print(item.$2);
+  }
+
+  final result3 = getKjwRecordTypeName();
+
+  for (final item in result3) {
+    print(item.$1);
+    print(item.$2);
+  }
+
+  final result4 = getKjwRecordTypeNameObj();
+
+  for (final item in result4) {
+    print(item.name);
+    print(item.age);
+  }
+}
+
+// Record - 타입의 순서를 보장받을 수 있다.
+(String, int) nameAndAge(Map<String, dynamic> json) {
+  return (json["name"] as String, json["age"] as int);
+}
+
+List<Map<String, dynamic>> getKjw() {
+  return [
+    {
+      "name": "k",
+      "age": 1,
+    },
+    {"name": "j", "age": 2}
+  ];
+}
+
+List<(String, dynamic)> getKjwRecord() {
+  return [
+    (
+      "k",
+      1,
+    ),
+    ("j", 2)
+  ];
+}
+
+List<(String name, int age)> getKjwRecordTypeName() {
+  return [
+    (
+      "k",
+      1,
+    ),
+    ("j", 2)
+  ];
+}
+
+List<({String name, int age})> getKjwRecordTypeNameObj() {
+  return [
+    (
+      name: "k",
+      age: 1,
+    ),
+    (name: "j", age: 2)
+  ];
+}
+
+(String name, String group, int age) getKjws() {
+  return ("k", "j", 1);
+}
+```
+
+### destructuring
+
+```dart
+void main() {
+  final (kjw$1, kjw$2) = ("kjw", 30);
+
+  print(kjw$1);
+  print(kjw$2);
+
+  final kjw = ["k", "j", "w"];
+
+  final [String a, String b, String c] = kjw;
+
+  print(a);
+  print(b);
+  print(c);
+
+  final numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  final [x, y, ..., z] = numbers;
+
+  print(x);
+  print(y);
+  print(z);
+
+  final [xx, _, yy, ...rest, zz, _] = numbers;
+
+  print(xx);
+  print(yy);
+  print(rest);
+  print(zz);
+
+  final kjwMap = {"name": "kjw", "age": 30};
+  final {"name": name2, "age": age2} = kjwMap;
+
+  print(name2);
+  print(age2);
+
+  final kjwClass = Kjw(name: "kjw", age: 30);
+
+  final Kjw(name: name3, age: age3) = kjwClass;
+
+  print(name3);
+  print(age3);
+}
+
+// destructuring
+class Kjw {
+  final String name;
+  final int age;
+
+  Kjw({required this.name, required this.age});
+}
+```
+
+### 패턴매칭
+
+```dart
+void main() {
+  // Validation
+
+  final kjw = ("kjw", 30);
+
+  final (name as String, age as int) = kjw;
+
+  print(name);
+  print(age);
+
+  switcher("aaa");
+//   switcher("bbb");
+//   switcher(["1", "2"]);
+//   switcher([1, 2]);
+//   switcher([1, 2, 3]);
+//   switcher([4, 5, 6]);
+//   switcher([4, 5, 6, 7]);
+//   switcher([6, 8]);
+//   switcher(["6", "8"]);
+  print(18);
+  print(switcher2(5, true));
+  print(switcher2(7, true));
+  print(switcher2(7, false));
+}
+
+// 패턴매칭
+
+void switcher(dynamic anything) {
+  switch (anything) {
+    case "aaa":
+      print("match : aaa");
+    case ["1", "2"]:
+      print("match : [1, 2]");
+    case [_, _, _]:
+      print("match : [_, _, _]");
+    case [int a, int b]:
+      print("match : [int $a, int $b]");
+    case < 10 && > 5:
+      print("match : < 10 && > 5");
+    default:
+      print("no match");
+  }
+}
+
+String switcher2(dynamic val, bool condition) => switch (val) {
+      5 => "match: 5",
+      7 when condition => "match 7 and true",
+      _ => "no match"
+    };
+
+void forLooper() {
+  final List<Map<String, dynamic>> kjw = [
+    {"name": "k", "age": 1},
+    {"name": "j", "age": 2}
+  ];
+
+  for (final asd in kjw) {
+    print(asd["name"]);
+    print(asd["age"]);
+  }
+
+  for (final asd in kjw) {
+    print(asd["name"]);
+    print(asd["age"]);
+  }
+}
+```
+
+### class 관련
+
+```dart
+void main() {}
+
+// final로 클래스를 선언하면
+// extends, implement, 또는 mixin으로 사용이 불가능하다.
+
+// base로 선언하면 extends는 가능하지만 implement는 불가능하다.
+// base, sealed, final로 선언된 클래스만 extend가 가능하다.
+base class Person {
+  final String name;
+  final String age;
+
+  Person({
+    required this.name,
+    required this.age,
+  });
+}
+
+// interface로 선언하면 implement만 가능하다.
+interface class Person {
+  final String name;
+  final String age;
+
+  Person({
+    required this.name,
+    required this.age,
+  });
+}
+
+// sealed 클래스는 abstract이면서 final이다.
+// 그리고 패턴매칭을 사용 할 수 있도록 해준다.
+sealed class Person {
+  final String name;
+  final String age;
+
+  Person({
+    required this.name,
+    required this.age,
+  });
+}
+
+// Mixin
+// 1) Mixin은 extends나 with을 사용할 수 없다. 그렇게때문에 mixin class도 마찬가지로 사용 불가능하다.
+// 2) 클래스는 on 키워드를 사용 할 수 없다. 그렇기때문에 mixin class도 on 키워드를 사용할 수 없다.
+mixin class AnimalMixin {
+  String bark() {
+    return "멍멍";
+  }
+}
+
+class Dog with AnimalMixin {}
+```
