@@ -1,125 +1,134 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart"; // 프로젝트 시작시 무조건적으로 import해주어야 하는 라이브러리
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp()); // 최상위 함수
 
+// 스크린레이아웃을 최초로 빌드하는 역할 어떤 변화나 움직임이 없어야한다.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Charactor card",
+      home: Grade(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class Grade extends StatelessWidget {
+  const Grade({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
+      backgroundColor: Colors.amber[800],
+      // 교육학에선 무언가를 혼자 해낼 수 있도록 발판을 만들어주다.
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text("BBANTO"),
+        centerTitle: true, // 가운데 정렬
+        backgroundColor: Colors.amber[700],
+        elevation: 0, // appBar의 그림자를 제거해줌
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: const Padding(
+        padding: EdgeInsets.fromLTRB(30, 40, 0, 0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/giphy.gif"),
+                radius: 60,
+              ),
+            ),
+            Divider(
+              height: 60,
+              color: Color.fromARGB(255, 59, 59, 59),
+              thickness: 0.5,
+              endIndent: 30,
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              "NAME",
+              style: TextStyle(color: Colors.white, letterSpacing: 2),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "BBANTO",
+              style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 2,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              "BBANTO POWER LEVEL",
+              style: TextStyle(color: Colors.white, letterSpacing: 2),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "14",
+              style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 2,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              children: [
+                Icon(Icons.check_circle_outline),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "using lightsaber",
+                  style: TextStyle(fontSize: 16, letterSpacing: 1),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.check_circle_outline),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "face hero tattoo",
+                  style: TextStyle(fontSize: 16, letterSpacing: 1),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.check_circle_outline),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "fire flames",
+                  style: TextStyle(fontSize: 16, letterSpacing: 1),
+                )
+              ],
+            ),
+            Center(
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/dog.jpg"),
+                radius: 40,
+                backgroundColor: Colors.amber,
+              ),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

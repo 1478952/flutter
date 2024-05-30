@@ -40,3 +40,27 @@ value값을 지속적으로 추적하고 보존함
 2. widget이 전혀 변화가 없으면 stateless widgets
 3. widget의 모양이나 상태가 바뀐다면 stateful widgets
 4. widget은 tree구조로 구성되어 있다.
+
+## 프로젝트
+
+### pubspec.yaml
+
+프로젝트의 메타데이터를 정의하고 관리함. 버전 디펜던시 라이브러리 등
+
+### android ios
+
+각 플랫폼에 맞게 앱을 배포하기위한 정보들을 가지고 있음.
+
+### test
+
+개발을 원하는 각종 dart관련 코드를 테스트 해볼수 있다.
+
+### lib
+
+메인 작업 폴더
+
+## 클래스명과 함수명
+
+함수명 main(), runApp() // 카멜
+
+클래스명 MyApp() // 파스칼
