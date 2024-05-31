@@ -64,3 +64,40 @@ value값을 지속적으로 추적하고 보존함
 함수명 main(), runApp() // 카멜
 
 클래스명 MyApp() // 파스칼
+
+## class and widget(인스턴스)
+
+프로그래밍 상에서의 클래스란?
+
+- 객체가 가져야 하는 속성과 기능을 정의한 내용을 담고 있는 설계도 역할
+  프그래밍 상에서의 객체란?
+- 클래스가 정의된 후 메모리상에 할당되었을 때 이를 객체라고 함
+  프그래밍 상에서의 인스턴스란?
+- 클래스를 기반으로 생성 됨
+- 클래스의 속성과 기능을 똑같이 가지고 있고 프로그래밍상에서 사용되는 대상
+
+## App bar icon button
+
+- leading: 아이콘 버튼이나 간단한 위젯을 왼쪽에 배치할 때
+- actions: 복수의 아이콘 버튼 등을 오른쪽에 배치할 때
+- onPressed: 함수의 형태로 일반 버튼이나 아이콘 버튼을 터치했을때 일어나는 이벤트를 정의 한 곳
+
+## Build Context
+
+"Scaffold.of() called with a context that does not contain a Scaffold"
+
+"A handle to the location of a widget in the widget tree"
+widget tree에서 현재 widget의 위치를 알 수 있는 정보
+
+모든 위젯은 build method를 가지고 있음.
+
+build => scaffold(context)
+
+"Each widget has its own BuildContext, which becomes the parent of the widget returned by the StatelessWidget.build or State.build function."
+이 BuildContext는 stateless위젯이나 state 빌드 메서드에 의해서 리턴 된 위젯의 부모가 된다.
+
+Scaffold.of(context) method
+현재 주어진 context에서 위로 올라가면서 가장 가까운 Scaffold를 찾아서 반환하라.
+
+Thme.of(context)
+Something.of(context)
