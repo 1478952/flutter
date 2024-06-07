@@ -101,3 +101,23 @@ Scaffold.of(context) method
 
 Thme.of(context)
 Something.of(context)
+
+## Container Widget
+
+container with no children try to be as big as possible
+컨테이너는 무조건 페이지 내에서 최대한의 공간을 차지하려함.
+
+containers with children size themselves to their children
+child에 widget이 있다면 자식크기를 따라감.
+
+widget이 화면밖을 빠져나갈때는 SafeArea widget으로 감싸주면된다.
+
+## Route
+
+Mobile apps typically reveal their contents via full-screen elements called "screens" or "pages" in Flutter these elements are called routes
+플러터에서 route는 단순히 스마트폰에서 보여지는 하나의 페이지 또는 화면
+
+## Navigator
+
+navigator manages a stack of Route objects and provides methods for managing the stack, like Navigator.push and Navigator.pop
+모든 앱페이지들을 관리하며 stack자료구조 형식으로 route객체들을 관리함. stack자료구조를 관리하기위해 push와 pop 메소드를 제공함
