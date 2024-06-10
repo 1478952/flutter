@@ -121,3 +121,40 @@ Mobile apps typically reveal their contents via full-screen elements called "scr
 
 navigator manages a stack of Route objects and provides methods for managing the stack, like Navigator.push and Navigator.pop
 모든 앱페이지들을 관리하며 stack자료구조 형식으로 route객체들을 관리함. stack자료구조를 관리하기위해 push와 pop 메소드를 제공함
+
+## Collection and Generic
+
+1. String interpolation
+
+문자열을 출력하거나 선언할때 다른 변수를 끼어넣는것
+
+```dart
+void main() {
+  String name = "Sean";
+  print(name);
+  print("Hi $name, what's up?");
+}
+```
+
+2. Collection / Generic
+
+- Collection: 데이터들을 모아서 가지고 있는 자료구조
+
+```dart
+int addNumber(int number1, int number2) {
+  return number1 + number2;
+}
+
+void main() {
+  List<int> number = new List();
+
+  number.add(2);
+  number.add("test"); // 에러
+  number.add(7.4); // 에러
+  number.add(addNumber(3, 4));
+  number.add(true); // 에러
+  print(number);
+}
+```
+
+- Generic: Collection이 가지고 있는 데이터들의 데이터 타입을 지정
