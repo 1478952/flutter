@@ -158,3 +158,67 @@ void main() {
 ```
 
 - Generic: Collection이 가지고 있는 데이터들의 데이터 타입을 지정
+
+```dart
+void main() {
+  var circleSlot = new Slot<Circle>();
+  circleSlot.insert(new Circle());
+
+  var squareSlot = new Slot<Square>();
+  squareSlot.insert(new Square());
+
+  var triangleSlot = new Slot<Triangle>();
+  triangleSlot.insert(new Triangle());
+}
+
+class Circle {}
+class Square {}
+class Triangle {}
+
+class Slot<T> {
+  insert (T shape) {}
+}
+```
+
+## State
+
+- State는 데이터이다?
+- State란 UI가 변경되도록 영향을 미치는 데이터이다.
+- App 수준과 Widget 수준의 데이터가 있다.
+
+### Stateless widget
+
+- State가 변하지 않는 위젯
+- Text("Korea") => Text("")
+
+### Widget tree and Element tree
+
+- Reload vs Rebuild
+
+1:1:1
+Widget tree - Element tree - Render tree
+MyApp - MyApp element - Render Object
+Scaffold - Scaffold element - Render Object
+AppBar - AppBar element - Render Object
+Text - Text element - Render Object
+
+### Widget tree and Element tree
+
+어떤 위젯에 새롭게 코드가 추가되면 새롭게 생성된 위젯의 타입과 위치가 일치하면 포인터만 업데이트함
+
+Container widget change -> Hot reload -> build method -> widget tree rebuild -> element tree link update -> element tree info -> render tree -> render object re-rendering
+
+Stateless 위젯은 rebuild만을 통해서 새로운 State 적용 가능
+
+### Stateful widget
+
+재렌더링 되는 경우
+
+- child 위젯의 생성자를 통해 데이터가 전달 될 때
+- internal state가 바뀔 때
+
+### If statement
+
+if (~~면) {
+~~ 실행한다
+}
