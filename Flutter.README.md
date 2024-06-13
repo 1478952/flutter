@@ -222,3 +222,8 @@ Stateless 위젯은 rebuild만을 통해서 새로운 State 적용 가능
 if (~~면) {
 ~~ 실행한다
 }
+
+### Focus
+
+- FocusNode: 포커스를 받는 특정 위젯을 식별
+- FocusScope: 어떤 위젯들까지 포커스를 받는지 범위를 나타냄
