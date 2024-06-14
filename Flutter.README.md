@@ -227,3 +227,20 @@ if (~~면) {
 
 - FocusNode: 포커스를 받는 특정 위젯을 식별
 - FocusScope: 어떤 위젯들까지 포커스를 받는지 범위를 나타냄
+
+## Process vs Program
+
+Photoshop -> HDD, SSD 설치되어 있을 뿐임. 데이터 묶음 (Program)
+더블클릭 후 실행되는순간 메모리에 등록되어 process가 됨
+
+### Thread
+
+Dart는 싱글 스레드로 운영되는 언어
+한번에 하나의 작업만을 실행함.
+작업이 진행중이면 코드상 존재하는 다른작업이 개입할 여지가없음.
+
+### Event loop
+
+1. FIFO 방식으로 Micro Task와 Event 준비
+2. main함수 실행
+3. Event loop 실행
