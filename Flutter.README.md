@@ -244,3 +244,18 @@ Dart는 싱글 스레드로 운영되는 언어
 1. FIFO 방식으로 Micro Task와 Event 준비
 2. main함수 실행
 3. Event loop 실행
+
+## Null safety
+
+Null : 아직 값이 정해지지 않은 것
+
+## Wiget lifecycle
+
+initState method
+state가 최초로 초기화 될때 호출되는 메소드
+
+build method
+
+dispose method
+
+deactivate method

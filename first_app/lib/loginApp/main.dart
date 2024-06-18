@@ -1,4 +1,4 @@
-import 'package:first_app/screens/loading.dart';
+import 'package:first_app/loginApp/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather app',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const Loading(),
+      title: 'Login app',
+      theme: ThemeData(primarySwatch: Colors.grey),
+      home: const LogIn(),
     );
   }
 }
