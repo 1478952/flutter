@@ -1,8 +1,9 @@
-import 'dart:convert';
-
+import 'package:first_app/data/my_location.dart';
+import 'package:first_app/data/network.dart';
+import 'package:first_app/screens/weather_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart' as geolocator;
-import 'package:http/http.dart' as http;
+
+const apiKey = "d0b34e67524f08be8232d719e14d9e59";
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -12,36 +13,26 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  getLocation() async {
-    try {
-      await geolocator.Geolocator.requestPermission();
-      geolocator.Position position =
-          await geolocator.Geolocator.getCurrentPosition(
-              desiredAccuracy: geolocator.LocationAccuracy.high);
-      print("position $position");
-      return position;
-    } catch (e) {
-      print("인터넷 연결에 문제가 생겼습니다.");
-    }
-  }
+  late double latitude3;
+  late double longitude3;
 
-  void fetchData() async {
-    Uri uri = Uri.parse(
-        "https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1");
+  void getLocation() async {
+    MyLocation myLocation = MyLocation();
+    await myLocation.getMyCurrentLocation();
+    latitude3 = myLocation.latitude2;
+    longitude3 = myLocation.longitude2;
+    print("latitude3 $latitude3");
+    print("longitude3 $longitude3");
 
-    http.Response response = await http.get(uri);
-
-    if (response.statusCode == 200) {
-      String jsonData = response.body;
-
-      var myJson = jsonDecode(jsonData);
-      var description = myJson["weather"][0]["description"];
-      var wind = myJson["wind"]["speed"];
-      var id = myJson["id"];
-      print("description $description");
-      print("wind $wind");
-      print("id $id");
-    }
+    Network network = Network(
+        "https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apiKey&units=metric");
+    var weatherData = await network.getJsonData();
+    print("weatherData $weatherData");
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WeatherScreen(
+        parseWeatherData: weatherData,
+      );
+    }));
   }
 
   @override
@@ -50,7 +41,6 @@ class _LoadingState extends State<Loading> {
     super.initState();
 
     getLocation();
-    fetchData();
   }
 
   @override
