@@ -259,3 +259,24 @@ build method
 dispose method
 
 deactivate method
+
+## Keys
+
+What are the keys?
+Flutter는 기본적으로 위젯의 타입으로 식별
+Stateful 위젯의 식별을 위해서는 key가 필요
+
+- 위젯이 위젯트리상에서 이동하는 과정에 위젯의 State를 보존하기 원할때
+- 위젯이나 요소들을 유니크하게 식별하는 역할
+
+value key
+
+- TextField widget
+- Value key는 value값을 가지는 Stateful 위젯에 사용
+
+e.g. TextField(key: ValueKey(1))
+
+Global key
+
+e.g.
+final counterKey = GlobalKey<\_CounterState>();
