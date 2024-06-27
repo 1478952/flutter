@@ -1,6 +1,6 @@
-import 'package:first_app/data/my_location.dart';
-import 'package:first_app/data/network.dart';
-import 'package:first_app/screens/weather_screen.dart';
+import 'package:first_app/weather/data/my_location.dart';
+import 'package:first_app/weather/data/network.dart';
+import 'package:first_app/weather/screens/weather_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

@@ -1,4 +1,4 @@
-import 'package:first_app/model/model.dart';
+import 'package:first_app/weather/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +23,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   late Widget airIcon;
   late Widget airState;
   late double dust1;
-  late double dust2;
+  double? dust2;
 
   var date = DateTime.now();
 
