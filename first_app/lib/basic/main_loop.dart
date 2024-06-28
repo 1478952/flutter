@@ -1,5 +1,3 @@
-import 'dart:math';
-
 void main() {
   // forward(5);
   // rainbow();

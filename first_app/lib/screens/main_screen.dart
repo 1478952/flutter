@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_app/config/palette.dart';
+import 'package:first_app/screens/chart_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginSigupScreen extends StatefulWidget {
@@ -9,6 +11,7 @@ class LoginSigupScreen extends StatefulWidget {
 }
 
 class _LoginSigupScreenState extends State<LoginSigupScreen> {
+  final _authentication = FirebaseAuth.instance;
   bool isSignupScreen = true;
   final _formKey = GlobalKey<FormState>();
   String userName = "";
@@ -188,6 +191,9 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                       onSaved: (value) {
                                         userName = value!;
                                       },
+                                      onChanged: (value) {
+                                        userName = value;
+                                      },
                                       decoration: const InputDecoration(
                                           prefixIcon: Icon(
                                             Icons.account_circle,
@@ -213,6 +219,7 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                       height: 8,
                                     ),
                                     TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
                                       key: const ValueKey(2),
                                       validator: (value) {
                                         if (value!.isEmpty ||
@@ -224,6 +231,9 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                       },
                                       onSaved: (value) {
                                         userEmail = value!;
+                                      },
+                                      onChanged: (value) {
+                                        userEmail = value;
                                       },
                                       decoration: const InputDecoration(
                                           prefixIcon: Icon(
@@ -250,6 +260,7 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                       height: 8,
                                     ),
                                     TextFormField(
+                                      obscureText: true,
                                       key: const ValueKey(3),
                                       validator: (value) {
                                         if (value!.isEmpty ||
@@ -261,6 +272,9 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                       },
                                       onSaved: (value) {
                                         userPassword = value!;
+                                      },
+                                      onChanged: (value) {
+                                        userPassword = value;
                                       },
                                       decoration: const InputDecoration(
                                           prefixIcon: Icon(
@@ -294,20 +308,25 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                               child: Column(
                                 children: [
                                   TextFormField(
+                                    keyboardType: TextInputType.emailAddress,
                                     key: const ValueKey(4),
                                     validator: (value) {
-                                      if (value!.isEmpty || value.length < 4) {
-                                        return "Please enter at least 4 characters";
+                                      if (value!.isEmpty ||
+                                          !value.contains("@")) {
+                                        return "Please enter a valid email address";
                                       }
 
                                       return null;
                                     },
                                     onSaved: (value) {
-                                      userName = value!;
+                                      userEmail = value!;
+                                    },
+                                    onChanged: (value) {
+                                      userEmail = value;
                                     },
                                     decoration: const InputDecoration(
                                         prefixIcon: Icon(
-                                          Icons.account_circle,
+                                          Icons.email,
                                           color: Palette.iconColor,
                                         ),
                                         enabledBorder: OutlineInputBorder(
@@ -320,7 +339,7 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                                 color: Palette.textColor1),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(35))),
-                                        hintText: "User name",
+                                        hintText: "email",
                                         hintStyle: TextStyle(
                                             fontSize: 14,
                                             color: Palette.textColor1),
@@ -330,6 +349,7 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                     height: 8,
                                   ),
                                   TextFormField(
+                                    obscureText: true,
                                     key: const ValueKey(5),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 6) {
@@ -340,6 +360,9 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                                     },
                                     onSaved: (value) {
                                       userPassword = value!;
+                                    },
+                                    onChanged: (value) {
+                                      userPassword = value;
                                     },
                                     decoration: const InputDecoration(
                                         prefixIcon: Icon(
@@ -386,8 +409,53 @@ class _LoginSigupScreenState extends State<LoginSigupScreen> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50)),
                     child: GestureDetector(
-                      onTap: () {
-                        _tryValidation();
+                      onTap: () async {
+                        if (isSignupScreen) {
+                          _tryValidation();
+
+                          try {
+                            final newUser = await _authentication
+                                .createUserWithEmailAndPassword(
+                                    email: userEmail, password: userPassword);
+
+                            if (newUser.user != null) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return ChatScreen();
+                              }));
+                            }
+                          } catch (e) {
+                            print(e);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content:
+                                  Text("Please check your email and password"),
+                              backgroundColor: Colors.blue,
+                            ));
+                          }
+                        } else {
+                          _tryValidation();
+
+                          try {
+                            final user = await _authentication
+                                .signInWithEmailAndPassword(
+                                    email: userEmail, password: userPassword);
+                            if (user.user != null) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return ChatScreen();
+                              }));
+                            }
+                          } catch (e) {
+                            print(e);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content:
+                                  Text("Please check your email and password"),
+                              backgroundColor: Colors.blue,
+                            ));
+                          }
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(
