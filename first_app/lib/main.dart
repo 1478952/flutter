@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:first_app/screens/chart_screen.dart';
 import 'package:first_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chatting app',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginSigupScreen(),
-    );
+        title: 'Chatting app',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const ChatScreen();
+            }
+            return const LoginSigupScreen();
+          },
+        ));
   }
 }

@@ -280,3 +280,9 @@ Global key
 
 e.g.
 final counterKey = GlobalKey<\_CounterState>();
+
+## Stream
+
+즉시 사용가능 기다려야 사용가능
+단일 데이터 int Future<int>
+복수 데이터 List<int> Stream<int>
